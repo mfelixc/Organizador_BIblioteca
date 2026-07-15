@@ -6,9 +6,8 @@
 
 using namespace std;
 
-const int MAX_LIBROS = 100;
-
-struct Libro{
+struct Libro
+{
     int codigo;
     string titulo;
     string autor;
@@ -17,11 +16,15 @@ struct Libro{
     bool disponible;
 };
 
-extern Libro biblioteca[MAX_LIBROS];
-extern int n;
+extern Libro biblioteca[100];
+extern int cantidadLibros;
 
 void registrarLibro();
 void mostrarLibros();
 void buscarLibro();
+
+void modificarLibro();
+void eliminarLibro();
+void ordenarLibros();
 
 #endif
