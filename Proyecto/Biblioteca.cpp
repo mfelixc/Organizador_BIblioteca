@@ -1,88 +1,114 @@
 #include "Biblioteca.h"
-void modificarLibro(Libro biblioteca[], int n){
+#include "rlutil.h"
 
-    int codigo;
-    bool encontrado = false;
+Libro biblioteca[MAX_LIBROS];
+int n = 0;
 
-    cout << "Ingrese el codigo del libro a modificar: ";
-    cin >> codigo;
+void registrarLibro(){
+
+    rlutil::cls();
+
+    if(n >= MAX_LIBROS){
+        cout << "La biblioteca esta llena.\n";
+        rlutil::anykey();
+        return;
+    }
+
+    cout << "========== REGISTRAR LIBRO ==========\n\n";
+
+    cout << "Codigo: ";
+    cin >> biblioteca[n].codigo;
     cin.ignore();
-    
-    for(int i = 0; i < n; i++){
 
-        if(biblioteca[i].codigo == codigo){
+    cout << "Titulo: ";
+    getline(cin,biblioteca[n].titulo);
 
-            cout << "Nuevo titulo: ";
-            getline(cin, biblioteca[i].titulo);
+    cout << "Autor: ";
+    getline(cin,biblioteca[n].autor);
 
-            cout << "Nuevo autor: ";
-            getline(cin, biblioteca[i].autor);
+    cout << "Categoria: ";
+    getline(cin,biblioteca[n].categoria);
 
-            cout << "Nueva categoria: ";
-            getline(cin, biblioteca[i].categoria);
+    cout << "Anio: ";
+    cin >> biblioteca[n].anio;
 
-            cout << "Nuevo año: ";
-            cin >> biblioteca[i].anio;
+    biblioteca[n].disponible = true;
 
-            encontrado = true;
+    n++;
 
-            cout << "\nLibro modificado correctamente.\n";
+    cout << "\nLibro registrado correctamente.";
 
-            break;
+    rlutil::anykey();
+}
+
+void mostrarLibros(){
+
+    rlutil::cls();
+
+    cout << "========== LISTA DE LIBROS ==========\n\n";
+
+    if(n == 0){
+
+        cout << "No hay libros registrados.\n";
+
+    }else{
+
+        for(int i=0;i<n;i++){
+
+            cout << "Codigo: " << biblioteca[i].codigo << endl;
+            cout << "Titulo: " << biblioteca[i].titulo << endl;
+            cout << "Autor: " << biblioteca[i].autor << endl;
+            cout << "Categoria: " << biblioteca[i].categoria << endl;
+            cout << "Anio: " << biblioteca[i].anio << endl;
+
+            if(biblioteca[i].disponible)
+                cout << "Estado: Disponible\n";
+            else
+                cout << "Estado: Prestado\n";
+
+            cout << "-----------------------------\n";
         }
+
     }
 
-    if(!encontrado)
-        cout << "\nLibro no encontrado.\n";
+    rlutil::anykey();
 }
-void eliminarLibro(Libro biblioteca[], int &n){
+
+void buscarLibro(){
+
+    rlutil::cls();
 
     int codigo;
     bool encontrado = false;
 
-    cout << "Ingrese el codigo del libro a eliminar: ";
+    cout << "========== BUSCAR LIBRO ==========\n\n";
+
+    cout << "Ingrese el codigo: ";
     cin >> codigo;
 
-    for(int i = 0; i < n; i++){
+    for(int i=0;i<n;i++){
 
         if(biblioteca[i].codigo == codigo){
 
-            for(int j = i; j < n - 1; j++){
+            cout << "\nLibro encontrado\n\n";
 
-                biblioteca[j] = biblioteca[j + 1];
-
-            }
-
-            n--;
+            cout << "Codigo: " << biblioteca[i].codigo << endl;
+            cout << "Titulo: " << biblioteca[i].titulo << endl;
+            cout << "Autor: " << biblioteca[i].autor << endl;
+            cout << "Categoria: " << biblioteca[i].categoria << endl;
+            cout << "Anio: " << biblioteca[i].anio << endl;
 
             encontrado = true;
-
-            cout << "\nLibro eliminado correctamente.\n";
-
             break;
         }
+
     }
 
-    if(!encontrado)
+    if(!encontrado){
+
         cout << "\nLibro no encontrado.\n";
-}
-void ordenarLibros(Libro biblioteca[], int n){
 
-    Libro aux;
-
-    for(int i = 0; i < n - 1; i++){
-
-        for(int j = 0; j < n - i - 1; j++){
-
-            if(biblioteca[j].titulo > biblioteca[j + 1].titulo){
-
-                aux = biblioteca[j];
-                biblioteca[j] = biblioteca[j + 1];
-                biblioteca[j + 1] = aux;
-
-            }
-        }
     }
 
-    cout << "\nLibros ordenados correctamente.\n";
+    rlutil::anykey();
 }
